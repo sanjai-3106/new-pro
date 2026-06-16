@@ -1,1 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Recommendation & Suggestion App</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+body{
+    background:#efefef;
+}
+
+/* 3D Card Effect */
+.card3d{
+    transition:all .35s ease;
+    transform-style:preserve-3d;
+}
+
+.card3d:hover{
+    transform:
+        perspective(1000px)
+        rotateX(5deg)
+        rotateY(-5deg)
+        translateY(-8px);
+    box-shadow:0 25px 40px rgba(0,0,0,.2);
+}
+
+/* Button Animation */
+.action-btn{
+    transition:.3s;
+}
+
+.action-btn:hover{
+    transform:scale(1.08);
+}
+
+.action-btn:active{
+    transform:scale(.95);
+}
+
+/* Category Cards */
+.category-card{
+    transition:.3s;
+}
+
+.category-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 25px rgba(0,0,0,.15);
+}
+
+/* Bottom Nav */
+.nav-icon{
+    transition:.3s;
+}
+
+.nav-icon:hover{
+    transform:translateY(-5px) scale(1.1);
+}
+</style>
+</head>
+
+<body>
+
+<div class="max-w-7xl mx-auto min-h-screen bg-gray-100 flex flex-col">
+
+    <!-- HERO SECTION -->
+    <section class="bg-blue-700 h-48 md:h-64 rounded-b-3xl flex items-center justify-center shadow-xl">
+
+        <div class="w-[85%] md:w-[60%]">
+            <div class="bg-white rounded-full shadow-2xl flex items-center px-5 py-4">
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search recommendations..."
+                    class="w-full outline-none text-gray-700 text-lg"
+                >
+
+                <button
+                    onclick="searchRecommendation()"
+                    class="ml-3 bg-blue-600 text-white px-5 py-2 rounded-full action-btn"
+                >
+                    Search
+                </button>
+
+            </div>
+        </div>
+
+    </section>
+
+    <!-- CATEGORY GRID -->
+    <section class="p-4 md:p-8">
+
+        <div class="grid grid-cols-4 gap-4">
+
+            <div onclick="openCategory('Movies')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                🎬
+            </div>
+
+            <div onclick="openCategory('Books')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                📚
+            </div>
+
+            <div onclick="openCategory('Music')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                🎵
+            </div>
+
+            <div onclick="openCategory('Food')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                🍔
+            </div>
+
+            <div onclick="openCategory('Travel')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                ✈️
+            </div>
+
+            <div onclick="openCategory('Tech')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                💻
+            </div>
+
+            <div onclick="openCategory('Games')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                🎮
+            </div>
+
+            <div onclick="openCategory('Shopping')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
+                🛒
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- RECOMMENDATION CARDS -->
+    <section class="px-4 md:px-8 space-y-4">
+
+        <!-- CARD 1 -->
+        <div class="card3d bg-gray-200 rounded-xl p-5 flex justify-between items-center">
+
+            <div>
+                <button
+                    onclick="likeItem('Recommendation 1')"
+                    class="bg-red-500 text-white px-8 py-4 rounded-2xl action-btn shadow-lg"
+                >
+                    Like
+                </button>
+            </div>
+
+            <button
+                onclick="viewDetails('Recommendation 1')"
+                class="bg-blue-600 text-white px-8 py-2 rounded-full action-btn"
+            >
+                Details
+            </button>
+
+        </div>
+
+        <!-- CARD 2 -->
+        <div class="card3d bg-gray-200 rounded-xl p-5 flex justify-between items-center">
+
+            <div>
+                <button
+                    onclick="likeItem('Recommendation 2')"
+                    class="bg-red-500 text-white px-8 py-4 rounded-2xl action-btn shadow-lg"
+                >
+                    Like
+                </button>
+            </div>
+
+            <button
+                onclick="viewDetails('Recommendation 2')"
+                class="bg-blue-600 text-white px-8 py-2 rounded-full action-btn"
+            >
+                Details
+            </button>
+
+        </div>
+
+    </section>
+
+    <!-- FEATURED SECTION -->
+    <section class="p-4 md:p-8 flex-grow">
+
+        <div
+            class="card3d h-72 md:h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl shadow-lg flex flex-col justify-center items-center"
+        >
+            <h2 class="text-2xl md:text-4xl font-bold mb-4">
+                Featured Recommendation
+            </h2>
+
+            <p class="text-gray-700 text-center max-w-lg">
+                Discover personalized suggestions based on your interests,
+                ratings, and activity.
+            </p>
+
+            <button
+                onclick="exploreFeatured()"
+                class="mt-6 bg-blue-700 text-white px-8 py-3 rounded-full action-btn"
+            >
+                Explore Now
+            </button>
+        </div>
+
+    </section>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="bg-gray-300 p-5">
+
+        <div class="flex justify-around">
+
+            <button onclick="goHome()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
+                🏠
+            </button>
+
+            <button onclick="openFavorites()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
+                ❤️
+            </button>
+
+            <button onclick="openNotifications()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
+                🔔
+            </button>
+
+            <button onclick="openProfile()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
+                👤
+            </button>
+
+        </div>
+
+    </nav>
+
+</div>
+
+<script>
+
+function searchRecommendation(){
+    let value = document.getElementById("searchInput").value;
+    alert("Searching for: " + value);
+}
+
+function openCategory(category){
+    alert("Opening " + category + " category");
+}
+
+function likeItem(item){
+    alert(item + " liked ❤️");
+}
+
+function viewDetails(item){
+    alert("Viewing details of " + item);
+}
+
+function exploreFeatured(){
+    alert("Exploring featured recommendation");
+}
+
+function goHome(){
+    alert("Home Page");
+}
+
+function openFavorites(){
+    alert("Favorites Page");
+}
+
+function openNotifications(){
+    alert("Notifications");
+}
+
+function openProfile(){
+    alert("Profile Page");
+}
+
+</script>
+
+</body>
+</html>
