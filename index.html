@@ -4,271 +4,510 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Recommendation & Suggestion App</title>
+<title>Recommendation & Suggestion</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
 
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
 <style>
+
 body{
-    background:#efefef;
+background:#f4f7fc;
+font-family:'Poppins',sans-serif;
+overflow-x:hidden;
 }
 
-/* 3D Card Effect */
-.card3d{
-    transition:all .35s ease;
-    transform-style:preserve-3d;
+/* Header Gradient */
+.header-bg{
+background:linear-gradient(135deg,#001f7a,#0034d1,#0b63ff);
 }
 
-.card3d:hover{
-    transform:
-        perspective(1000px)
-        rotateX(5deg)
-        rotateY(-5deg)
-        translateY(-8px);
-    box-shadow:0 25px 40px rgba(0,0,0,.2);
+/* 3D Cards */
+.card-3d{
+transition:all .4s ease;
+transform-style:preserve-3d;
 }
 
-/* Button Animation */
-.action-btn{
-    transition:.3s;
+.card-3d:hover{
+transform:
+perspective(1000px)
+rotateX(6deg)
+rotateY(-6deg)
+translateY(-10px)
+scale(1.02);
+box-shadow:
+0 30px 50px rgba(0,0,0,.18);
 }
 
-.action-btn:hover{
-    transform:scale(1.08);
-}
-
-.action-btn:active{
-    transform:scale(.95);
-}
-
-/* Category Cards */
+/* Category Hover */
 .category-card{
-    transition:.3s;
+transition:.35s;
 }
 
 .category-card:hover{
-    transform:translateY(-8px);
-    box-shadow:0 15px 25px rgba(0,0,0,.15);
+transform:
+translateY(-8px)
+scale(1.05);
+box-shadow:0 20px 30px rgba(0,0,0,.15);
 }
 
-/* Bottom Nav */
-.nav-icon{
-    transition:.3s;
+/* Button Animation */
+.btn-glow{
+transition:.3s;
 }
 
-.nav-icon:hover{
-    transform:translateY(-5px) scale(1.1);
+.btn-glow:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,102,255,.4);
 }
+
+/* Bookmark */
+.bookmark.active{
+color:#2563eb;
+}
+
+/* Nav */
+.nav-item.active{
+color:#2563eb;
+}
+
+.nav-item{
+transition:.3s;
+}
+
+.nav-item:hover{
+transform:translateY(-5px);
+}
+
+.search-box{
+box-shadow:
+0 10px 30px rgba(0,0,0,.08);
+}
+
+/* Smooth */
+*{
+scroll-behavior:smooth;
+}
+
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="max-w-7xl mx-auto min-h-screen bg-gray-100 flex flex-col">
+<!-- MAIN CONTAINER -->
+<div class="max-w-7xl mx-auto min-h-screen bg-white shadow-lg">
 
-    <!-- HERO SECTION -->
-    <section class="bg-blue-700 h-48 md:h-64 rounded-b-3xl flex items-center justify-center shadow-xl">
+<!-- HEADER -->
+<header class="header-bg rounded-b-3xl p-5 text-white">
 
-        <div class="w-[85%] md:w-[60%]">
-            <div class="bg-white rounded-full shadow-2xl flex items-center px-5 py-4">
+<!-- TOP BAR -->
+<div class="flex justify-between items-center">
 
-                <input
-                    type="text"
-                    id="searchInput"
-                    placeholder="Search recommendations..."
-                    class="w-full outline-none text-gray-700 text-lg"
-                >
+<i class="fas fa-bars text-3xl cursor-pointer"></i>
 
-                <button
-                    onclick="searchRecommendation()"
-                    class="ml-3 bg-blue-600 text-white px-5 py-2 rounded-full action-btn"
-                >
-                    Search
-                </button>
+<h1 class="text-lg md:text-3xl font-bold text-center">
+RECOMMENDATION & SUGGESTION
+</h1>
 
-            </div>
-        </div>
+<div class="relative">
+<i class="far fa-bell text-3xl cursor-pointer"></i>
 
-    </section>
+<span
+class="absolute -top-2 -right-2 bg-red-500 text-xs px-2 py-1 rounded-full">
+3
+</span>
+</div>
 
-    <!-- CATEGORY GRID -->
-    <section class="p-4 md:p-8">
+</div>
 
-        <div class="grid grid-cols-4 gap-4">
+<!-- SEARCH -->
+<div class="mt-8">
+<div class="bg-white rounded-2xl search-box flex items-center p-4">
 
-            <div onclick="openCategory('Movies')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                🎬
-            </div>
+<i class="fas fa-search text-gray-500 text-2xl"></i>
 
-            <div onclick="openCategory('Books')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                📚
-            </div>
+<input
+id="searchInput"
+type="text"
+placeholder="Search recommendations..."
+class="w-full ml-4 outline-none text-gray-700 text-lg"
+/>
 
-            <div onclick="openCategory('Music')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                🎵
-            </div>
+</div>
+</div>
 
-            <div onclick="openCategory('Food')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                🍔
-            </div>
+</header>
 
-            <div onclick="openCategory('Travel')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                ✈️
-            </div>
+<!-- CONTENT -->
+<div class="p-5">
 
-            <div onclick="openCategory('Tech')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                💻
-            </div>
+<!-- CATEGORIES -->
+<div class="flex justify-between items-center mb-5">
+<h2 class="text-3xl font-bold">Categories</h2>
 
-            <div onclick="openCategory('Games')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                🎮
-            </div>
+<button class="text-blue-600 font-semibold">
+See All
+</button>
+</div>
 
-            <div onclick="openCategory('Shopping')" class="category-card bg-white rounded-xl h-20 md:h-28 flex items-center justify-center shadow cursor-pointer">
-                🛒
-            </div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-5">
 
-        </div>
+<!-- Movie -->
+<div class="category-card bg-blue-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Movies')">
 
-    </section>
+<i class="fas fa-film text-5xl"></i>
 
-    <!-- RECOMMENDATION CARDS -->
-    <section class="px-4 md:px-8 space-y-4">
+<h3 class="mt-4 text-2xl font-semibold">
+Movies
+</h3>
 
-        <!-- CARD 1 -->
-        <div class="card3d bg-gray-200 rounded-xl p-5 flex justify-between items-center">
+</div>
 
-            <div>
-                <button
-                    onclick="likeItem('Recommendation 1')"
-                    class="bg-red-500 text-white px-8 py-4 rounded-2xl action-btn shadow-lg"
-                >
-                    Like
-                </button>
-            </div>
+<!-- Books -->
+<div class="category-card bg-green-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Books')">
 
-            <button
-                onclick="viewDetails('Recommendation 1')"
-                class="bg-blue-600 text-white px-8 py-2 rounded-full action-btn"
-            >
-                Details
-            </button>
+<i class="fas fa-book text-5xl text-teal-700"></i>
 
-        </div>
+<h3 class="mt-4 text-2xl font-semibold">
+Books
+</h3>
 
-        <!-- CARD 2 -->
-        <div class="card3d bg-gray-200 rounded-xl p-5 flex justify-between items-center">
+</div>
 
-            <div>
-                <button
-                    onclick="likeItem('Recommendation 2')"
-                    class="bg-red-500 text-white px-8 py-4 rounded-2xl action-btn shadow-lg"
-                >
-                    Like
-                </button>
-            </div>
+<!-- Food -->
+<div class="category-card bg-yellow-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Food')">
 
-            <button
-                onclick="viewDetails('Recommendation 2')"
-                class="bg-blue-600 text-white px-8 py-2 rounded-full action-btn"
-            >
-                Details
-            </button>
+<i class="fas fa-burger text-5xl"></i>
 
-        </div>
+<h3 class="mt-4 text-2xl font-semibold">
+Food
+</h3>
 
-    </section>
+</div>
 
-    <!-- FEATURED SECTION -->
-    <section class="p-4 md:p-8 flex-grow">
+<!-- Travel -->
+<div class="category-card bg-purple-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Travel')">
 
-        <div
-            class="card3d h-72 md:h-96 bg-gradient-to-br from-gray-200 to-gray-300 rounded-xl shadow-lg flex flex-col justify-center items-center"
-        >
-            <h2 class="text-2xl md:text-4xl font-bold mb-4">
-                Featured Recommendation
-            </h2>
+<i class="fas fa-plane text-5xl text-blue-600"></i>
 
-            <p class="text-gray-700 text-center max-w-lg">
-                Discover personalized suggestions based on your interests,
-                ratings, and activity.
-            </p>
+<h3 class="mt-4 text-2xl font-semibold">
+Travel
+</h3>
 
-            <button
-                onclick="exploreFeatured()"
-                class="mt-6 bg-blue-700 text-white px-8 py-3 rounded-full action-btn"
-            >
-                Explore Now
-            </button>
-        </div>
+</div>
 
-    </section>
+<!-- Music -->
+<div class="category-card bg-pink-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Music')">
 
-    <!-- BOTTOM NAVIGATION -->
-    <nav class="bg-gray-300 p-5">
+<i class="fas fa-music text-5xl text-purple-600"></i>
 
-        <div class="flex justify-around">
+<h3 class="mt-4 text-2xl font-semibold">
+Music
+</h3>
 
-            <button onclick="goHome()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
-                🏠
-            </button>
+</div>
 
-            <button onclick="openFavorites()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
-                ❤️
-            </button>
+<!-- Courses -->
+<div class="category-card bg-yellow-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Courses')">
 
-            <button onclick="openNotifications()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
-                🔔
-            </button>
+<i class="fas fa-graduation-cap text-5xl"></i>
 
-            <button onclick="openProfile()" class="nav-icon bg-red-500 w-14 h-14 rounded-full shadow-lg text-white">
-                👤
-            </button>
+<h3 class="mt-4 text-2xl font-semibold">
+Courses
+</h3>
 
-        </div>
+</div>
 
-    </nav>
+<!-- Games -->
+<div class="category-card bg-blue-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Games')">
+
+<i class="fas fa-gamepad text-5xl"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Games
+</h3>
+
+</div>
+
+<!-- Shopping -->
+<div class="category-card bg-pink-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Shopping')">
+
+<i class="fas fa-bag-shopping text-5xl text-pink-500"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Shopping
+</h3>
+
+</div>
+
+</div>
+
+<!-- RECOMMENDED -->
+<div class="mt-12">
+
+<div class="flex justify-between mb-5">
+<h2 class="text-3xl font-bold">
+Recommended For You
+</h2>
+
+<button class="text-blue-600 font-semibold">
+See All
+</button>
+</div>
+
+<!-- CARD 1 -->
+<div class="card-3d bg-white rounded-3xl p-5 shadow-lg mb-6">
+
+<div class="flex flex-col md:flex-row gap-5">
+
+<img
+src="https://images.unsplash.com/photo-1534447677768-be436bb09401"
+class="w-full md:w-72 h-48 object-cover rounded-2xl">
+
+<div class="flex-1">
+
+<div class="flex justify-between">
+
+<h3 class="text-3xl font-bold">
+Top Movie Recommendation
+</h3>
+
+<i onclick="toggleBookmark(this)"
+class="far fa-bookmark text-3xl bookmark cursor-pointer"></i>
+
+</div>
+
+<p class="text-gray-600 mt-2">
+A mind-bending journey through space and time.
+Must-watch masterpiece.
+</p>
+
+<div class="text-yellow-500 text-xl mt-3">
+★★★★★ <span class="text-black">4.8/5</span>
+</div>
+
+<button
+onclick="viewDetails('Interstellar')"
+class="btn-glow bg-blue-600 text-white px-6 py-3 rounded-xl mt-5">
+
+View Details
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- CARD 2 -->
+<div class="card-3d bg-white rounded-3xl p-5 shadow-lg">
+
+<div class="flex flex-col md:flex-row gap-5">
+
+<img
+src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+class="w-full md:w-72 h-48 object-cover rounded-2xl">
+
+<div class="flex-1">
+
+<div class="flex justify-between">
+
+<h3 class="text-3xl font-bold">
+Best Food Suggestion
+</h3>
+
+<i onclick="toggleBookmark(this)"
+class="far fa-bookmark text-3xl bookmark cursor-pointer"></i>
+
+</div>
+
+<p class="text-gray-600 mt-2">
+Popular and top-rated food near you.
+Don't miss it.
+</p>
+
+<div class="text-yellow-500 text-xl mt-3">
+★★★★☆ <span class="text-black">4.6/5</span>
+</div>
+
+<button
+onclick="viewDetails('Burger Special')"
+class="btn-glow bg-blue-600 text-white px-6 py-3 rounded-xl mt-5">
+
+View Details
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- INTERESTS -->
+<div class="mt-12">
+
+<h2 class="text-3xl font-bold mb-5">
+Suggestions Based on Interests
+</h2>
+
+<div class="bg-green-50 rounded-3xl p-4">
+
+<div onclick="interestClick('Java Programming')"
+class="flex justify-between items-center p-4 border-b cursor-pointer">
+
+<div class="flex items-center gap-4">
+<i class="fas fa-code text-green-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Learn Java Programming
+</span>
+</div>
+
+<i class="fas fa-chevron-right"></i>
+
+</div>
+
+<div onclick="interestClick('Ooty Trip')"
+class="flex justify-between items-center p-4 border-b cursor-pointer">
+
+<div class="flex items-center gap-4">
+<i class="fas fa-mountain text-blue-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Visit Ooty This Weekend
+</span>
+</div>
+
+<i class="fas fa-chevron-right"></i>
+
+</div>
+
+<div onclick="interestClick('Atomic Habits')"
+class="flex justify-between items-center p-4 cursor-pointer">
+
+<div class="flex items-center gap-4">
+<i class="fas fa-book-open text-purple-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Read Atomic Habits
+</span>
+</div>
+
+<i class="fas fa-chevron-right"></i>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM NAV -->
+<nav
+class="sticky bottom-0 bg-white border-t mt-10 shadow-lg">
+
+<div class="grid grid-cols-4 text-center">
+
+<div class="nav-item active p-4 cursor-pointer">
+<i class="fas fa-home text-2xl"></i>
+<p>Home</p>
+</div>
+
+<div class="nav-item p-4 cursor-pointer">
+<i class="fas fa-th-large text-2xl"></i>
+<p>Categories</p>
+</div>
+
+<div class="nav-item p-4 cursor-pointer">
+<i class="far fa-heart text-2xl"></i>
+<p>Favorites</p>
+</div>
+
+<div class="nav-item p-4 cursor-pointer">
+<i class="far fa-user text-2xl"></i>
+<p>Profile</p>
+</div>
+
+</div>
+
+</nav>
 
 </div>
 
 <script>
 
-function searchRecommendation(){
-    let value = document.getElementById("searchInput").value;
-    alert("Searching for: " + value);
+/* Search */
+document
+.getElementById("searchInput")
+.addEventListener("keyup", function(){
+
+console.log("Searching:",this.value);
+
+});
+
+/* Category Click */
+function showCategory(category){
+
+alert("Opening " + category + " category");
+
 }
 
-function openCategory(category){
-    alert("Opening " + category + " category");
-}
-
-function likeItem(item){
-    alert(item + " liked ❤️");
-}
-
+/* View Details */
 function viewDetails(item){
-    alert("Viewing details of " + item);
+
+alert("Viewing details of " + item);
+
 }
 
-function exploreFeatured(){
-    alert("Exploring featured recommendation");
+/* Bookmark Toggle */
+function toggleBookmark(icon){
+
+icon.classList.toggle("active");
+
+if(icon.classList.contains("active")){
+icon.classList.replace("far","fas");
+}
+else{
+icon.classList.replace("fas","far");
 }
 
-function goHome(){
-    alert("Home Page");
 }
 
-function openFavorites(){
-    alert("Favorites Page");
+/* Interest Click */
+function interestClick(item){
+
+alert("Selected: " + item);
+
 }
 
-function openNotifications(){
-    alert("Notifications");
-}
+/* Bottom Nav Active */
 
-function openProfile(){
-    alert("Profile Page");
-}
+document.querySelectorAll(".nav-item")
+.forEach(item=>{
+
+item.addEventListener("click",()=>{
+
+document
+.querySelectorAll(".nav-item")
+.forEach(i=>i.classList.remove("active"));
+
+item.classList.add("active");
+
+});
+
+});
 
 </script>
 
