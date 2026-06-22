@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Categories</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+body{
+font-family:'Poppins',sans-serif;
+background:#f6f8fc;
+overflow-x:hidden;
+}
+
+/* Glass Effect */
+.glass{
+background:rgba(255,255,255,.8);
+backdrop-filter:blur(15px);
+}
+
+/* Sidebar */
+.sidebar-item{
+transition:.3s;
+cursor:pointer;
+}
+
+.sidebar-item:hover{
+transform:translateX(8px);
+color:#2563eb;
+}
+
+/* Active */
+.active-category{
+background:#2563eb;
+color:white;
+box-shadow:0 10px 25px rgba(37,99,235,.35);
+}
+
+/* Card Hover */
+.category-card{
+transition:.4s;
+transform-style:preserve-3d;
+}
+
+.category-card:hover{
+transform:
+perspective(1000px)
+rotateX(6deg)
+rotateY(-6deg)
+translateY(-10px)
+scale(1.03);
+
+box-shadow:
+0 25px 50px rgba(0,0,0,.15);
+}
+
+/* Bottom Nav */
+.nav-item{
+transition:.3s;
+cursor:pointer;
+}
+
+.nav-item:hover{
+transform:translateY(-5px);
+}
+
+.nav-active{
+color:#2563eb;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{
+width:6px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#2563eb;
+border-radius:10px;
+}
+
+</style>
+
+</head>
+<body>
+
+<!-- APP -->
+<div class="max-w-7xl mx-auto min-h-screen bg-white shadow-lg">
+
+<!-- HEADER -->
+<header class="flex items-center justify-between p-5 bg-white sticky top-0 z-50 border-b">
+
+<div onclick="goBack()"
+class="cursor-pointer">
+<i class="fas fa-chevron-left text-xl"></i>
+</div>
+
+<h1 class="font-bold text-xl md:text-2xl">
+Categories
+</h1>
+
+<div onclick="openSearch()"
+class="cursor-pointer">
+<i class="fas fa-search text-xl"></i>
+</div>
+
+</header>
+
+<!-- CONTENT -->
+<div class="flex">
+
+<!-- SIDEBAR -->
+<aside
+class="hidden md:flex flex-col w-60 border-r bg-white p-4 gap-2">
+
+<div
+class="sidebar-item active-category p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'All')">
+
+<i class="fas fa-th-large"></i>
+<span>All</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Movies')">
+
+<i class="fas fa-film"></i>
+<span>Movies</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Books')">
+
+<i class="fas fa-book"></i>
+<span>Books</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Food')">
+
+<i class="fas fa-burger"></i>
+<span>Food</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Travel')">
+
+<i class="fas fa-plane"></i>
+<span>Travel</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Music')">
+
+<i class="fas fa-music"></i>
+<span>Music</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Courses')">
+
+<i class="fas fa-graduation-cap"></i>
+<span>Courses</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Games')">
+
+<i class="fas fa-gamepad"></i>
+<span>Games</span>
+
+</div>
+
+<div
+class="sidebar-item p-3 rounded-xl flex items-center gap-3"
+onclick="selectCategory(this,'Shopping')">
+
+<i class="fas fa-bag-shopping"></i>
+<span>Shopping</span>
+
+</div>
+
+</aside>
+
+<!-- MOBILE CATEGORY BAR -->
+<div
+class="md:hidden overflow-x-auto whitespace-nowrap border-b bg-white p-3 flex gap-3">
+
+<button
+class="active-category px-4 py-2 rounded-xl">
+All
+</button>
+
+<button class="px-4 py-2 rounded-xl bg-gray-100">
+Movies
+</button>
+
+<button class="px-4 py-2 rounded-xl bg-gray-100">
+Books
+</button>
+
+<button class="px-4 py-2 rounded-xl bg-gray-100">
+Food
+</button>
+
+<button class="px-4 py-2 rounded-xl bg-gray-100">
+Travel
+</button>
+
+</div>
+
+<!-- GRID -->
+<main class="flex-1 p-5">
+
+<div
+class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5">
+
+<!-- CARD 1 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Movies
+</h3>
+
+<p class="text-gray-500 mt-2">
+128 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 2 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1524995997946-a1c2e315a42f"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Books
+</h3>
+
+<p class="text-gray-500 mt-2">
+96 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 3 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Food
+</h3>
+
+<p class="text-gray-500 mt-2">
+78 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 4 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Travel
+</h3>
+
+<p class="text-gray-500 mt-2">
+64 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 5 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1511379938547-c1f69419868d"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Music
+</h3>
+
+<p class="text-gray-500 mt-2">
+55 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 6 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Courses
+</h3>
+
+<p class="text-gray-500 mt-2">
+48 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 7 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1511512578047-dfb367046420"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Games
+</h3>
+
+<p class="text-gray-500 mt-2">
+67 Items
+</p>
+
+</div>
+
+</div>
+
+<!-- CARD 8 -->
+<div
+class="category-card glass rounded-3xl overflow-hidden shadow-md">
+
+<img
+src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b"
+class="h-40 w-full object-cover">
+
+<div class="p-4 text-center">
+
+<h3 class="font-bold text-xl">
+Shopping
+</h3>
+
+<p class="text-gray-500 mt-2">
+90 Items
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
+
+</div>
+
+<!-- BOTTOM NAVIGATION -->
+<nav
+class="fixed bottom-0 left-0 right-0 bg-white border-t shadow-lg">
+
+<div class="grid grid-cols-4 text-center">
+
+<div
+class="nav-item py-3"
+onclick="navigate('home')">
+
+<i class="fas fa-home text-xl"></i>
+<p class="text-sm mt-1">Home</p>
+
+</div>
+
+<div
+class="nav-item py-3 nav-active"
+onclick="navigate('categories')">
+
+<i class="fas fa-th-large text-xl"></i>
+<p class="text-sm mt-1">Categories</p>
+
+</div>
+
+<div
+class="nav-item py-3"
+onclick="navigate('favorites')">
+
+<i class="far fa-heart text-xl"></i>
+<p class="text-sm mt-1">Favorites</p>
+
+</div>
+
+<div
+class="nav-item py-3"
+onclick="navigate('profile')">
+
+<i class="far fa-user text-xl"></i>
+<p class="text-sm mt-1">Profile</p>
+
+</div>
+
+</div>
+
+</nav>
+
+<div class="h-20"></div>
+
+<script>
+
+// Back
+function goBack(){
+history.back();
+}
+
+// Search
+function openSearch(){
+alert("Open Search Page");
+}
+
+// Sidebar Category
+function selectCategory(element,name){
+
+document
+.querySelectorAll('.sidebar-item')
+.forEach(item=>{
+item.classList.remove('active-category');
+});
+
+element.classList.add('active-category');
+
+alert(name + " Selected");
+
+}
+
+// Navigation
+function navigate(page){
+
+switch(page){
+
+case "home":
+window.location.href="index.html";
+break;
+
+case "categories":
+window.location.href="categories.html";
+break;
+
+case "favorites":
+window.location.href="favorites.html";
+break;
+
+case "profile":
+window.location.href="profile.html";
+break;
+
+}
+
+}
+
+// Card Click
+document
+.querySelectorAll('.category-card')
+.forEach(card=>{
+
+card.addEventListener('click',()=>{
+
+const title =
+card.querySelector('h3').innerText;
+
+alert("Opening " + title);
+
+});
+
+});
+
+</script>
+
+</body>
+</html>
