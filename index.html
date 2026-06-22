@@ -9,94 +9,113 @@
 <script src="https://cdn.tailwindcss.com"></script>
 
 <link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
 <style>
 
 body{
-font-family:'Poppins',sans-serif;
 background:#f4f7fc;
+font-family:'Poppins',sans-serif;
+overflow-x:hidden;
 }
 
-/* Gradient Header */
-.hero{
-background:linear-gradient(135deg,#001f7a,#0038ff);
+/* Header Gradient */
+.header-bg{
+background:linear-gradient(135deg,#001f7a,#0034d1,#0b63ff);
 }
 
-/* Category Cards */
-.category-card{
+/* 3D Cards */
+.card-3d{
 transition:all .4s ease;
 transform-style:preserve-3d;
 }
 
-.category-card:hover{
+.card-3d:hover{
 transform:
 perspective(1000px)
-rotateX(5deg)
-rotateY(-5deg)
-translateY(-10px);
-box-shadow:0 25px 40px rgba(0,0,0,.18);
+rotateX(6deg)
+rotateY(-6deg)
+translateY(-10px)
+scale(1.02);
+box-shadow:
+0 30px 50px rgba(0,0,0,.18);
 }
 
-/* Recommendation Card */
-.rec-card{
-transition:.4s;
+/* Category Hover */
+.category-card{
+transition:.35s;
 }
 
-.rec-card:hover{
-transform:translateY(-8px);
-box-shadow:0 20px 35px rgba(0,0,0,.15);
+.category-card:hover{
+transform:
+translateY(-8px)
+scale(1.05);
+box-shadow:0 20px 30px rgba(0,0,0,.15);
 }
 
-/* Buttons */
-.btn-primary{
-background:linear-gradient(90deg,#0066ff,#0052d4);
+/* Button Animation */
+.btn-glow{
+transition:.3s;
 }
 
-.btn-primary:hover{
-transform:scale(1.05);
+.btn-glow:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,102,255,.4);
 }
 
-/* Bottom Nav */
+/* Bookmark */
+.bookmark.active{
+color:#2563eb;
+}
+
+/* Nav */
+.nav-item.active{
+color:#2563eb;
+}
+
 .nav-item{
 transition:.3s;
 }
 
 .nav-item:hover{
-transform:translateY(-4px);
-color:#2563eb;
+transform:translateY(-5px);
 }
 
-.active-nav{
-color:#2563eb;
+.search-box{
+box-shadow:
+0 10px 30px rgba(0,0,0,.08);
+}
+
+/* Smooth */
+*{
+scroll-behavior:smooth;
 }
 
 </style>
-</head>
 
+</head>
 <body>
 
-<div class="max-w-md mx-auto bg-white min-h-screen shadow-xl">
+<!-- MAIN CONTAINER -->
+<div class="max-w-7xl mx-auto min-h-screen bg-white shadow-lg">
 
 <!-- HEADER -->
-<div class="hero text-white p-5 rounded-b-3xl">
+<header class="header-bg rounded-b-3xl p-5 text-white">
 
+<!-- TOP BAR -->
 <div class="flex justify-between items-center">
 
-<button onclick="toggleMenu()">
-<i class="fas fa-bars text-2xl"></i>
-</button>
+<i class="fas fa-bars text-3xl cursor-pointer"></i>
 
-<h1 class="font-bold text-xl text-center">
-RECOMMENDATION &<br>
-SUGGESTION
+<h1 class="text-lg md:text-3xl font-bold text-center">
+RECOMMENDATION & SUGGESTION
 </h1>
 
 <div class="relative">
-<i class="far fa-bell text-2xl"></i>
+<i class="far fa-bell text-3xl cursor-pointer"></i>
 
 <span
-class="absolute -top-2 -right-2 bg-red-500 text-xs px-1 rounded-full">
+class="absolute -top-2 -right-2 bg-red-500 text-xs px-2 py-1 rounded-full">
 3
 </span>
 </div>
@@ -104,194 +123,182 @@ class="absolute -top-2 -right-2 bg-red-500 text-xs px-1 rounded-full">
 </div>
 
 <!-- SEARCH -->
-<div class="mt-5 bg-white rounded-xl flex items-center px-4 py-3">
+<div class="mt-8">
+<div class="bg-white rounded-2xl search-box flex items-center p-4">
 
-<i class="fas fa-search text-gray-500"></i>
+<i class="fas fa-search text-gray-500 text-2xl"></i>
 
 <input
 id="searchInput"
 type="text"
 placeholder="Search recommendations..."
-class="flex-1 ml-3 outline-none text-black">
-
-<button onclick="searchItems()">
-<i class="fas fa-sliders-h text-blue-600"></i>
-</button>
+class="w-full ml-4 outline-none text-gray-700 text-lg"
+/>
 
 </div>
-
 </div>
+
+</header>
 
 <!-- CONTENT -->
-<div class="p-4">
+<div class="p-5">
 
-<!-- Categories -->
-<div class="flex justify-between items-center mb-4">
+<!-- CATEGORIES -->
+<div class="flex justify-between items-center mb-5">
+<h2 class="text-3xl font-bold">Categories</h2>
 
-<h2 class="font-bold text-xl">
-Categories
-</h2>
-
-<a href="categories.html"
-class="text-blue-600 font-semibold">
+<button class="text-blue-600 font-semibold">
 See All
-</a>
-
+</button>
 </div>
 
-<div class="grid grid-cols-4 gap-3">
-
-<div onclick="openCategory('Movies')"
-class="category-card bg-blue-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-film text-2xl"></i>
-<p class="text-sm mt-2">Movies</p>
-
-</div>
-
-<div onclick="openCategory('Books')"
-class="category-card bg-green-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-book text-2xl"></i>
-<p class="text-sm mt-2">Books</p>
-
-</div>
-
-<div onclick="openCategory('Food')"
-class="category-card bg-yellow-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-burger text-2xl"></i>
-<p class="text-sm mt-2">Food</p>
-
-</div>
-
-<div onclick="openCategory('Travel')"
-class="category-card bg-purple-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-plane text-2xl"></i>
-<p class="text-sm mt-2">Travel</p>
-
-</div>
-
-<div onclick="openCategory('Music')"
-class="category-card bg-pink-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-music text-2xl"></i>
-<p class="text-sm mt-2">Music</p>
-
-</div>
-
-<div onclick="openCategory('Courses')"
-class="category-card bg-yellow-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-graduation-cap text-2xl"></i>
-<p class="text-sm mt-2">Courses</p>
-
-</div>
-
-<div onclick="openCategory('Games')"
-class="category-card bg-blue-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-gamepad text-2xl"></i>
-<p class="text-sm mt-2">Games</p>
-
-</div>
-
-<div onclick="openCategory('Shopping')"
-class="category-card bg-pink-50 rounded-xl p-3 text-center cursor-pointer">
-
-<i class="fas fa-bag-shopping text-2xl"></i>
-<p class="text-sm mt-2">Shopping</p>
-
-</div>
-
-</div>
-
-<!-- Recommended -->
-<div class="mt-8">
-
-<div class="flex justify-between">
-
-<h2 class="font-bold text-xl">
-Recommended For You
-</h2>
-
-<a href="#" class="text-blue-600">
-See All
-</a>
-
-</div>
-
-<div class="grid grid-cols-3 gap-3 mt-4">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-5">
 
 <!-- Movie -->
-<div class="rec-card bg-white rounded-xl shadow p-2">
+<div class="category-card bg-blue-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Movies')">
 
-<img
-src="https://images.unsplash.com/photo-1534447677768-be436bb09401?w=500"
-class="rounded-lg h-28 w-full object-cover">
+<i class="fas fa-film text-5xl"></i>
 
-<h4 class="font-semibold mt-2 text-sm">
-Interstellar
-</h4>
+<h3 class="mt-4 text-2xl font-semibold">
+Movies
+</h3>
 
-<p class="text-xs text-gray-500">
-Sci-Fi, Adventure
-</p>
+</div>
 
-<button
-onclick="viewDetails('Interstellar')"
-class="btn-primary text-white text-xs px-3 py-2 rounded-lg w-full mt-2">
+<!-- Books -->
+<div class="category-card bg-green-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Books')">
 
-View Details
+<i class="fas fa-book text-5xl text-teal-700"></i>
 
-</button>
+<h3 class="mt-4 text-2xl font-semibold">
+Books
+</h3>
 
 </div>
 
 <!-- Food -->
-<div class="rec-card bg-white rounded-xl shadow p-2">
+<div class="category-card bg-yellow-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Food')">
 
-<img
-src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=500"
-class="rounded-lg h-28 w-full object-cover">
+<i class="fas fa-burger text-5xl"></i>
 
-<h4 class="font-semibold mt-2 text-sm">
-Best Burgers
-</h4>
-
-<p class="text-xs text-gray-500">
+<h3 class="mt-4 text-2xl font-semibold">
 Food
-</p>
-
-<button
-onclick="viewDetails('Burger')"
-class="btn-primary text-white text-xs px-3 py-2 rounded-lg w-full mt-2">
-
-View Details
-
-</button>
+</h3>
 
 </div>
 
-<!-- Book -->
-<div class="rec-card bg-white rounded-xl shadow p-2">
+<!-- Travel -->
+<div class="category-card bg-purple-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Travel')">
+
+<i class="fas fa-plane text-5xl text-blue-600"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Travel
+</h3>
+
+</div>
+
+<!-- Music -->
+<div class="category-card bg-pink-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Music')">
+
+<i class="fas fa-music text-5xl text-purple-600"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Music
+</h3>
+
+</div>
+
+<!-- Courses -->
+<div class="category-card bg-yellow-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Courses')">
+
+<i class="fas fa-graduation-cap text-5xl"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Courses
+</h3>
+
+</div>
+
+<!-- Games -->
+<div class="category-card bg-blue-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Games')">
+
+<i class="fas fa-gamepad text-5xl"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Games
+</h3>
+
+</div>
+
+<!-- Shopping -->
+<div class="category-card bg-pink-50 rounded-3xl p-6 text-center cursor-pointer"
+onclick="showCategory('Shopping')">
+
+<i class="fas fa-bag-shopping text-5xl text-pink-500"></i>
+
+<h3 class="mt-4 text-2xl font-semibold">
+Shopping
+</h3>
+
+</div>
+
+</div>
+
+<!-- RECOMMENDED -->
+<div class="mt-12">
+
+<div class="flex justify-between mb-5">
+<h2 class="text-3xl font-bold">
+Recommended For You
+</h2>
+
+<button class="text-blue-600 font-semibold">
+See All
+</button>
+</div>
+
+<!-- CARD 1 -->
+<div class="card-3d bg-white rounded-3xl p-5 shadow-lg mb-6">
+
+<div class="flex flex-col md:flex-row gap-5">
 
 <img
-src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=500"
-class="rounded-lg h-28 w-full object-cover">
+src="https://images.unsplash.com/photo-1534447677768-be436bb09401"
+class="w-full md:w-72 h-48 object-cover rounded-2xl">
 
-<h4 class="font-semibold mt-2 text-sm">
-Atomic Habits
-</h4>
+<div class="flex-1">
 
-<p class="text-xs text-gray-500">
-Book
+<div class="flex justify-between">
+
+<h3 class="text-3xl font-bold">
+Top Movie Recommendation
+</h3>
+
+<i onclick="toggleBookmark(this)"
+class="far fa-bookmark text-3xl bookmark cursor-pointer"></i>
+
+</div>
+
+<p class="text-gray-600 mt-2">
+A mind-bending journey through space and time.
+Must-watch masterpiece.
 </p>
 
+<div class="text-yellow-500 text-xl mt-3">
+★★★★★ <span class="text-black">4.8/5</span>
+</div>
+
 <button
-onclick="viewDetails('Atomic Habits')"
-class="btn-primary text-white text-xs px-3 py-2 rounded-lg w-full mt-2">
+onclick="viewDetails('Interstellar')"
+class="btn-glow bg-blue-600 text-white px-6 py-3 rounded-xl mt-5">
 
 View Details
 
@@ -303,37 +310,99 @@ View Details
 
 </div>
 
-<!-- Interest Suggestions -->
-<div class="mt-8">
+<!-- CARD 2 -->
+<div class="card-3d bg-white rounded-3xl p-5 shadow-lg">
 
-<h2 class="font-bold text-xl mb-3">
+<div class="flex flex-col md:flex-row gap-5">
+
+<img
+src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+class="w-full md:w-72 h-48 object-cover rounded-2xl">
+
+<div class="flex-1">
+
+<div class="flex justify-between">
+
+<h3 class="text-3xl font-bold">
+Best Food Suggestion
+</h3>
+
+<i onclick="toggleBookmark(this)"
+class="far fa-bookmark text-3xl bookmark cursor-pointer"></i>
+
+</div>
+
+<p class="text-gray-600 mt-2">
+Popular and top-rated food near you.
+Don't miss it.
+</p>
+
+<div class="text-yellow-500 text-xl mt-3">
+★★★★☆ <span class="text-black">4.6/5</span>
+</div>
+
+<button
+onclick="viewDetails('Burger Special')"
+class="btn-glow bg-blue-600 text-white px-6 py-3 rounded-xl mt-5">
+
+View Details
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- INTERESTS -->
+<div class="mt-12">
+
+<h2 class="text-3xl font-bold mb-5">
 Suggestions Based on Interests
 </h2>
 
-<div class="bg-green-50 rounded-2xl p-3">
+<div class="bg-green-50 rounded-3xl p-4">
 
-<div onclick="interest('Java')"
-class="flex justify-between p-3 border-b cursor-pointer">
+<div onclick="interestClick('Java Programming')"
+class="flex justify-between items-center p-4 border-b cursor-pointer">
 
-<span>Learn Java Programming</span>
+<div class="flex items-center gap-4">
+<i class="fas fa-code text-green-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Learn Java Programming
+</span>
+</div>
 
 <i class="fas fa-chevron-right"></i>
 
 </div>
 
-<div onclick="interest('Ooty')"
-class="flex justify-between p-3 border-b cursor-pointer">
+<div onclick="interestClick('Ooty Trip')"
+class="flex justify-between items-center p-4 border-b cursor-pointer">
 
-<span>Visit Ooty This Weekend</span>
+<div class="flex items-center gap-4">
+<i class="fas fa-mountain text-blue-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Visit Ooty This Weekend
+</span>
+</div>
 
 <i class="fas fa-chevron-right"></i>
 
 </div>
 
-<div onclick="interest('Atomic Habits')"
-class="flex justify-between p-3 cursor-pointer">
+<div onclick="interestClick('Atomic Habits')"
+class="flex justify-between items-center p-4 cursor-pointer">
 
-<span>Read Atomic Habits</span>
+<div class="flex items-center gap-4">
+<i class="fas fa-book-open text-purple-600 text-3xl"></i>
+<span class="font-semibold text-xl">
+Read Atomic Habits
+</span>
+</div>
 
 <i class="fas fa-chevron-right"></i>
 
@@ -345,67 +414,100 @@ class="flex justify-between p-3 cursor-pointer">
 
 </div>
 
-<!-- Bottom Nav -->
+<!-- BOTTOM NAV -->
 <nav
-class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t">
+class="sticky bottom-0 bg-white border-t mt-10 shadow-lg">
 
 <div class="grid grid-cols-4 text-center">
 
-<div class="nav-item active-nav py-3">
-<i class="fas fa-home"></i>
-<p class="text-xs">Home</p>
+<div class="nav-item active p-4 cursor-pointer">
+<i class="fas fa-home text-2xl"></i>
+<p>Home</p>
 </div>
 
-<div
-onclick="location.href='categories.html'"
-class="nav-item py-3">
-<i class="fas fa-th-large"></i>
-<p class="text-xs">Categories</p>
+<div class="nav-item p-4 cursor-pointer">
+<i class="fas fa-th-large text-2xl"></i>
+<p>Categories</p>
 </div>
 
-<div class="nav-item py-3">
-<i class="far fa-heart"></i>
-<p class="text-xs">Favorites</p>
+<div class="nav-item p-4 cursor-pointer">
+<i class="far fa-heart text-2xl"></i>
+<p>Favorites</p>
 </div>
 
-<div class="nav-item py-3">
-<i class="far fa-user"></i>
-<p class="text-xs">Profile</p>
+<div class="nav-item p-4 cursor-pointer">
+<i class="far fa-user text-2xl"></i>
+<p>Profile</p>
 </div>
 
 </div>
 
 </nav>
 
-<div class="h-20"></div>
+</div>
 
 <script>
 
-function toggleMenu(){
-alert("Sidebar Menu");
+/* Search */
+document
+.getElementById("searchInput")
+.addEventListener("keyup", function(){
+
+console.log("Searching:",this.value);
+
+});
+
+/* Category Click */
+function showCategory(category){
+
+alert("Opening " + category + " category");
+
 }
 
-function searchItems(){
-let text =
-document.getElementById("searchInput").value;
-
-alert("Searching: " + text);
-}
-
-function openCategory(category){
-alert("Opening " + category);
-}
-
+/* View Details */
 function viewDetails(item){
-alert("Opening Details: " + item);
 
-// Example:
-// window.location.href="movie-details.html";
+alert("Viewing details of " + item);
+
 }
 
-function interest(item){
+/* Bookmark Toggle */
+function toggleBookmark(icon){
+
+icon.classList.toggle("active");
+
+if(icon.classList.contains("active")){
+icon.classList.replace("far","fas");
+}
+else{
+icon.classList.replace("fas","far");
+}
+
+}
+
+/* Interest Click */
+function interestClick(item){
+
 alert("Selected: " + item);
+
 }
+
+/* Bottom Nav Active */
+
+document.querySelectorAll(".nav-item")
+.forEach(item=>{
+
+item.addEventListener("click",()=>{
+
+document
+.querySelectorAll(".nav-item")
+.forEach(i=>i.classList.remove("active"));
+
+item.classList.add("active");
+
+});
+
+});
 
 </script>
 
